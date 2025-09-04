@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "readaline.h"
+
+size_t readaline(FILE *inputfd, char **datapp) {
+    check amount of arguments
+        check file can be opened
+            create empty array (size 1000)
+            while current char is not /n 
+                every time loop runs, update a size_t variable
+                append char to datapp array
+            
+                update the pointer 
+                return using size_t variable for size
+                
+     ?handling weird characters       
+    
+    
+   The characters comprising the line are placed into a contiguous array of bytes
+
+   *datapp is set to the address of of the first byte. 
+   
+   readaline returns the number of bytes in the line.
+}
+
+#ifndef READALINE_H_INCLUDED
+#define READALINE_H_INCLUDED
+
+#include <stdio.h>
+
+/*
+ *               readaline
+ *
+ *   Purpose:
+ *
+ *     Read a line from the given input file
+ *
+ *   Parameters:
+ *
+ *     inputfd:   file stream must have been opened for reading
+ *     datapp:    used for function output:  address of location to
+ *                store pointer to newly ready line's data. I. e.,
+ *                readaline will update *datapp to point to newly
+ *                allocated buffer with data (or NULL if called at eof)
+ *
+ *   Errors:
+ *
+ *     A Hanson exception is raised if fd or **datapp is supplied as NULL,
+ *     if memory cannot be allocated, or if an error is encountered reading
+ *     the input stream.
+ *
+ *   Note: caller must free (*datapp) to avoid memory leaks.
+ *
+ *   Note: readline would be a less clumsy name, but there is already
+ *         a standard readline() Unix library routine, so readaline
+ *         minimizes the chance we accidentally call that when wanting this.
+ */
+size_t readaline(FILE *inputfd, char **datapp);
