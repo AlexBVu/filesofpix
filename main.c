@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
                     printf("file opened\n");
                     restoration(fp);
                     fclose(fp);
+                    (void) fp;
                 }
         } else if (argc == 1) {
                 restoration(stdin);

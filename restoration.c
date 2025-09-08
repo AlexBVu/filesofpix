@@ -3,23 +3,20 @@
 
 void restoration(FILE *fp) 
 {
-        char buff[2];
-        int j = 20;
-        
-        fgets(buff, j, fp);
 
-        printf("-%d-", j);
-
-        for (int i = 0; i < 2; i++) {
-                printf("|%c|", buff[i]);
-        }
-
-        (void) fp;
 
         printf("Hello this is in restoration!\n");
 
-        int i = readaline(NULL, NULL);
+        char *datapp;
+
+        int i = readaline(fp, &datapp);
+
+        for (int j = 0; j < i; j++) {
+                printf("%c", datapp[j]);
+        }
+        printf("\n");
 
         (void) i;
+        free(datapp);
         return;
 }

@@ -19,7 +19,7 @@ EXECUTABLES = restoration
 #  files it really uses.
 #
 # Add your own .h files to the right side of the assingment below.
-INCLUDES = restoration.h readaline.h
+INCLUDES = main.h restoration.h readaline.h
 
 # Do all C compies with gcc (at home you could try clang)
 CC = gcc
@@ -57,15 +57,15 @@ LDLIBS = -lpnmrdr -lcii40 -lm
 #
 all: $(EXECUTABLES)
 
-main.o: main.c $(main.h)
-	$(CC) $(CFLAGS) -c $<
+# main.o: main.c $(main.h)
+# 	$(CC) $(CFLAGS) -c $<
 
-restoration.o: restoration.c $(restoration.h)
-	$(CC) $(CFLAGS) -c $<
+# restoration.o: restoration.c $(restoration.h)
+# 	$(CC) $(CFLAGS) -c $<
 
 
-readaline.o: readaline.c $(readaline.h)
-	$(CC) $(CFLAGS) -c $<
+# readaline.o: readaline.c $(readaline.h)
+# 	$(CC) $(CFLAGS) -c $<
 
 
 
@@ -91,7 +91,7 @@ clean:
 #
 
 restoration: main.o restoration.o readaline.o
-	$(CC) $(LDFLAGS) -o restoration main.o restoration.o readaline.o 
+	$(CC) $(LDFLAGS) -o restoration main.o restoration.o readaline.o $(LDLIBS)
 
 # TESTING RESTORATION RULE
 # restoration: restoration.o main.o readaline.o
