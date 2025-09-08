@@ -19,7 +19,7 @@ EXECUTABLES = restoration
 #  files it really uses.
 #
 # Add your own .h files to the right side of the assingment below.
-INCLUDES = 
+INCLUDES = restoration.h readaline.h
 
 # Do all C compies with gcc (at home you could try clang)
 CC = gcc
@@ -57,6 +57,18 @@ LDLIBS = -lpnmrdr -lcii40 -lm
 #
 all: $(EXECUTABLES)
 
+main.o: main.c $(main.h)
+	$(CC) $(CFLAGS) -c $<
+
+restoration.o: restoration.c $(restoration.h)
+	$(CC) $(CFLAGS) -c $<
+
+
+readaline.o: readaline.c $(readaline.h)
+	$(CC) $(CFLAGS) -c $<
+
+
+
 # 
 #    'make clean' will remove all object and executable files
 #
@@ -77,8 +89,20 @@ clean:
 #    Those .o files are linked together to build the corresponding
 #    executable.
 #
-restoration: restoration.o readaline.o
-	$(CC) $(LDFLAGS) -o restoration  restoration.o readaline.o $(LDLIBS)
+
+restoration: main.o restoration.o readaline.o
+	$(CC) $(LDFLAGS) -o restoration main.o restoration.o readaline.o 
+
+# TESTING RESTORATION RULE
+# restoration: restoration.o main.o readaline.o
+#	$(CC) $(LDFLAGS) -o restoration  restoration.o main.o readaline.o $(LDLIBS)
+
+#ORIGINAL RESTORATION MAKEFILE RULE ============
+#restoration: restoration.o readaline.o
+#	$(CC) $(LDFLAGS) -o restoration  restoration.o readaline.o $(LDLIBS)
+
+# unit_test: unit_test_driver.o restoration.o readaline.o
+
 
 #
 # Other Shortcuts worth nothing

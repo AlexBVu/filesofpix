@@ -6,5 +6,4 @@ int main() {
 	//reading through
 	datapp[i] = word;
 
-    return 0;
 }
