@@ -4,15 +4,14 @@ int main(int argc, char *argv[])
 {
 
         if (argc == 2) {
+
                 printf("argc == 1\n");
 
-                //for now try opening file in main ASK TAS!
                 FILE *fp = fopen(argv[1], "r");
                 if (fp == NULL) {
                   printf("file won't open. Goodbye!\n");
                   exit(EXIT_SUCCESS);
-                }
-                else {
+                } else {
                     printf("file opened\n");
                     restoration(fp);
                     fclose(fp);

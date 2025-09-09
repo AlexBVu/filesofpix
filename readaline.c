@@ -1,13 +1,11 @@
+
 #include <stdlib.h>
 #include "readaline.h"
 #include <assert.h>
 
 size_t readaline(FILE *inputfd, char **datapp) 
 {
-        //  TODO: Put lineString on the heap!
         char *lineString = (char *)malloc(1000 * sizeof(*lineString));
-        //char *lineString = NULL;
-        
         
        // TODO: assertions and error handling with bad memory alloc
         assert(lineString != NULL);

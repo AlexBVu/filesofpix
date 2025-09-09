@@ -1,0 +1,8 @@
+i is 0
+curr is b
+i is 1
+curr is c
+i is 2
+curr is 
+
+The string is: abc͇
