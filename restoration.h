@@ -1,14 +1,19 @@
 #ifndef RESTORATION_H_
 #define RESTORATION_H_
 
+#include <stdlib.h>
+#include <stdbool.h>
 
 #include "readaline.h"
 #include "table.h"
 #include "seq.h"
-#include "Atom.h"
+#include "atom.h"
+#include "assert.h"
 
-#include <stdlib.h>
 
 void restoration(FILE *fp);
+void check(char **datapp, size_t length, 
+           Seq_T *originalWords, Table_T *injectedTable, bool *seqFound);
 
+const char *lineCleaning(char **datapp, size_t length, char *cleanLine);
 #endif

@@ -12,20 +12,33 @@ size_t readaline(FILE *inputfd, char **datapp)
 
 	size_t i = 0;
 
-
+        /*take in the first character*/
         char curr = fgetc(inputfd);
 
-        //load bearing print statement
-        // printf("first char%c\n", curr);
+
+        /*iterate until we reach endline character or if we 
+        reach end of file or line capacity*/
 
 	while (curr != '\n' && curr != EOF && i < 999) {
+
                 lineString[i++] = curr;
                 curr = fgetc(inputfd);
 	}
 
-        lineString[i] = '\0';
-        *datapp = lineString;
+        //SOMETHING LIKE THIS IN PROGRESS
+        if (curr == EOF) {
+                *datapp = NULL;
+                return 0;
+        } else {
+                /*set end of our cstring to null character to validate it*/
+                lineString[i] = '\0';
+                *datapp = lineString;
 
-        return i;
+                return i;
+        }
+
+
+        
+        
 
 }
