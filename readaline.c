@@ -5,6 +5,8 @@
 
 size_t readaline(FILE *inputfd, char **datapp) 
 {
+        // ? if we free this, why does it still work?
+
         char *lineString = (char *)malloc(1000 * sizeof(*lineString));
         
        // TODO: assertions and error handling with bad memory alloc
@@ -33,12 +35,7 @@ size_t readaline(FILE *inputfd, char **datapp)
                 /*set end of our cstring to null character to validate it*/
                 lineString[i] = '\0';
                 *datapp = lineString;
-
                 return i;
         }
-
-
-        
-        
 
 }
