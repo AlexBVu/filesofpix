@@ -1,0 +1,70 @@
+
+
+=======================================================
+THESE ARE OUR TESTS FOR FILE LINKING AND MAKEFILE COMPILING
+int main() 
+{
+
+        printf("Hello this is in main!\n");
+
+        restoration();
+        return 0;
+}
+
+void restoration()
+ {
+
+
+        printf("Hello this is in restoration!\n");
+
+        int i = readaline(NULL, NULL);
+
+        (void) i;
+        return;
+}
+
+size_t readaline(FILE *inputfd, char **datapp) 
+{
+        (void) inputfd;
+        (void) datapp;
+
+        printf("Hello this is in readaline!\n");
+
+        return 1;
+}
+
+=======================================================
+THESE ARE OUR TESTS FOR FILE OPEN AND CLOSE AND USER INPUTTED
+ARGS.
+
+int main(int argc, char *argv[]) 
+{
+
+        if (argc == 2) {
+                printf("argc == 1\n");
+
+                FILE *fp = fopen(argv[1], "r");
+
+                if (fp == NULL) {
+                  printf("file won't open\n");
+                }
+
+                else {
+                    printf("file opened\n");
+                    fclose(fp);
+                }
+
+        } else if (argc == 1) {
+                printf("argc == 0\n");
+        } else {
+                printf("argc is too many\n");
+        }
+
+        exit(EXIT_SUCCESS);
+}
+
+We tested with:
+testOpen.txt (valid file with one line)
+badFile.txt (non-existent)
+emptyFile.txt (file is empty)
+=======================================================

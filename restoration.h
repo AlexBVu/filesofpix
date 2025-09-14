@@ -16,4 +16,7 @@ void check(char **datapp, size_t length,
            Seq_T *originalWords, Table_T *injectedTable, bool *seqFound);
 
 const char *lineCleaning(char **datapp, size_t length, char *cleanLine);
+void printState(Seq_T *originalWords);
+size_t countWidth(Seq_T *originalWords);
+
 #endif
