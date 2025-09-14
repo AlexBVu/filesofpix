@@ -132,24 +132,25 @@ const char *lineCleaning(char **datapp, size_t length, char *cleanedLine)
 
 
         for (i = 0; i < length; i++) {
-
                 //set current character to curr index in datapp
                 char currChar = (*datapp)[i];
 
                 /* if current char is a digit */
-                if (currChar >= 48 && currChar <= 57) {
-                        // printf("\nadding curr char to cleanedLine:%c-\n", currChar);
+                if (currChar >= '0' && currChar <= '9') {
                         cleanedLine[cleanedIndex++] = currChar;
                         inNumber = true;
                         
                 /* if current char is not a digit */
-                } else if (currChar < 48 || currChar > 57) {
-                        // printf("\nadding curr char to dirtyCString:%c-\n", currChar);
+                } else {
                         dirtyCString[dirtyIndex++] = currChar;
-                        cleanedLine[cleanedIndex++] = ' ';
-                        inNumber = false;
+                        
+                        /* Only add a space if we were previously in a number
+                         * This prevents multiple consecutive spaces */
+                        if (inNumber) {
+                                cleanedLine[cleanedIndex++] = ' ';
+                                inNumber = false;
+                        }
                 }
-
         }
 
         if (cleanedIndex > 0 && cleanedLine[cleanedIndex - 1] == ' ') {
@@ -171,22 +172,63 @@ const char *lineCleaning(char **datapp, size_t length, char *cleanedLine)
 }
 
 size_t countWidth(Seq_T *originalWords) {
-        char *firstLine = Seq_get(*originalWords, 0);
-                char curr = firstLine[0];
-                size_t count = 0;
 
-                while (curr != '\0') {
+        /*
+        
+        char *firstLine = Seq_get(*originalWords, 0);
+        char curr = firstLine[0];
+        size_t count = 0;
+        size_t i = 0;
+        
+        while (curr != '\0') {
+                curr = firstLine[count];
+                
+                if (curr != ' ') {
+                        
+                count++;
+        }
                         // printf("%zu\n", count);
-                        curr = firstLine[count];
-                        count++;
+                        
                 }
         // printf("count: %zu\n", count - 1);
         return count - 1;
+        */
+
+
+        if (Seq_length(*originalWords) == 0) {
+                return 0;
+        }
+        
+        char *firstLine = Seq_get(*originalWords, 0);
+        size_t width = 0;
+        size_t i = 0;
+        
+        /* Count digits by parsing through the cleaned line */
+        while (firstLine[i] != '\0') {
+                /* Skip whitespace */
+                while (firstLine[i] == ' ' && firstLine[i] != '\0') {
+                        i++;
+                }
+                
+                /* If we found a digit, count this as one pixel */
+                if (firstLine[i] >= '0' && firstLine[i] <= '9') {
+                        width++;
+                        /* Skip the rest of this number */
+                        while (firstLine[i] >= '0' && firstLine[i] <= '9' && firstLine[i] != '\0') {
+                                i++;
+                        }
+                } else if (firstLine[i] != '\0') {
+                        /* Skip non-digit character */
+                        i++;
+                }
+        }
+        
+        return width;
 }
 
 void printState(Seq_T *originalWords) {
 
-        /*variables containing height and width*/
+        /*variables containing height and width
         size_t width = countWidth(originalWords);
         size_t height = Seq_length(*originalWords);
         //printf("height: %zu\n", height);
@@ -198,17 +240,54 @@ void printState(Seq_T *originalWords) {
         //iterate until all rows (lines) have been taken in
         for (size_t row = 0; row < height; row++) {
 
-                /*print newline char for each row and get line*/
                 printf("\n");
                 char *currLine = Seq_get(*originalWords, row);
                 
-                /*for every character in every row that isn't null, print*/
+                // for every character in every row that isn't null, print
                 for (size_t column = 0; column < width && currLine[column] != '\0'; column++) {
                         printf("%d", currLine[column]);
                 }
         }
-        /*print final newline for formatting*/
         printf("\n");
+        */
+
+        /* Variables containing height and width */
+        size_t width = countWidth(originalWords);
+        size_t height = Seq_length(*originalWords);
+        
+        /* Print P5 header */
+        printf("P5\n%zu %zu\n255\n", width, height);
+        
+        /* Iterate through all rows (lines) */
+        for (size_t row = 0; row < height; row++) {
+                char *currLine = Seq_get(*originalWords, row);
+                size_t i = 0;
+                
+                /* Parse and output each number as a binary byte */
+                while (currLine[i] != '\0') {
+                        /* Skip whitespace */
+                        while (currLine[i] == ' ' && currLine[i] != '\0') {
+                                i++;
+                        }
+                        
+                        /* Parse number if we found a digit */
+                        if (currLine[i] >= '0' && currLine[i] <= '9') {
+                                int pixelValue = 0;
+                                
+                                /* Convert string of digits to integer */
+                                while (currLine[i] >= '0' && currLine[i] <= '9' && currLine[i] != '\0') {
+                                        pixelValue = pixelValue * 10 + (currLine[i] - '0');
+                                        i++;
+                                }
+                                
+                                /* Output as single byte (0-255) */
+                                putchar((unsigned char)pixelValue);
+                        } else if (currLine[i] != '\0') {
+                                /* Skip unexpected non-digit character */
+                                i++;
+                        }
+                }
+        }
 
 
                 
