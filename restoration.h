@@ -3,12 +3,14 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "readaline.h"
 #include "table.h"
 #include "seq.h"
 #include "atom.h"
 #include "assert.h"
+#include "except.h"
 
 
 void restoration(FILE *fp);
@@ -18,5 +20,6 @@ void check(char **datapp, size_t length,
 const char *lineCleaning(char **datapp, size_t length, char *cleanLine);
 void printState(Seq_T *originalWords);
 size_t countWidth(Seq_T *originalWords);
+void freeTableContents(const void *key, void **value, void *cl);
 
 #endif

@@ -1,0 +1,4 @@
+A1000           bad
+A10000          bad
+D9889           OOO
+A1000000        bad

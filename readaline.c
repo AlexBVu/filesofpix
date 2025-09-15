@@ -1,41 +1,38 @@
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "readaline.h"
+#include <except.h>
 #include <assert.h>
+
+Except_T readaline_except = { NULL };
 
 size_t readaline(FILE *inputfd, char **datapp) 
 {
-        // ? if we free this, why does it still work?
-
+        if (inputfd == NULL || datapp == NULL) {
+                RAISE(readaline_except);
+        }
         char *lineString = (char *)malloc(1000 * sizeof(*lineString));
-        
-       // TODO: assertions and error handling with bad memory alloc
         assert(lineString != NULL);
-
 	size_t i = 0;
-
-        /*take in the first character*/
         char curr = fgetc(inputfd);
 
-
-        /*iterate until we reach endline character or if we 
-        reach end of file or line capacity*/
-
-	while (curr != '\n' && curr != EOF && i < 999) {
-
+	while (curr != '\n' && curr != EOF) {
                 lineString[i++] = curr;
                 curr = fgetc(inputfd);
+                if (i > 999) {
+                        fprintf(stderr, "readaline: input line too long\n");
+                        exit(4);
+                }
 	}
 
-        //SOMETHING LIKE THIS IN PROGRESS
-        if (curr == EOF) {
+        if (i == 0 && curr == EOF) {
+                free(lineString);
                 *datapp = NULL;
                 return 0;
         } else {
-                /*set end of our cstring to null character to validate it*/
                 lineString[i] = '\0';
                 *datapp = lineString;
                 return i;
         }
-
 }
